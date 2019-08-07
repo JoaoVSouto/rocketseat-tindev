@@ -6,7 +6,17 @@ module.exports = {
   async index(req, res) {
     const { user } = req.headers;
 
-    const loggedDev = await Dev.findById(user);
+    let loggedDev;
+
+    try {
+      loggedDev = await Dev.findById(user);
+
+      if (!loggedDev) {
+        throw err;
+      }
+    } catch (err) {
+      return res.status(404).json({ error: 'user not found' });
+    }
 
     const users = await Dev.find({
       $and: [
