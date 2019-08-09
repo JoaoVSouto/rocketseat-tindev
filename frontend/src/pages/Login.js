@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import Loading from '../components/Loading';
 import './Login.scss';
 
 import api from '../services/api';
 
 import logo from '../assets/logo.svg';
-
-// TODO: Modularize it!
 
 const Login = ({ history }) => {
   const [username, setUsername] = useState('');
@@ -26,7 +25,6 @@ const Login = ({ history }) => {
       history.push(`/dev/${id}`);
     } catch (err) {
       setErrorCode(err.response.status);
-    } finally {
       setLoading(false);
     }
   };
@@ -34,19 +32,7 @@ const Login = ({ history }) => {
   return (
     <div className="login-container">
       {loading && !errorCode ? (
-        <div className="loader-container">
-          <span>Carregando</span>
-          <div className="loader">
-            <div className="duo duo1">
-              <div className="dot dot-a" />
-              <div className="dot dot-b" />
-            </div>
-            <div className="duo duo2">
-              <div className="dot dot-a" />
-              <div className="dot dot-b" />
-            </div>
-          </div>
-        </div>
+        <Loading />
       ) : (
         <form onSubmit={handleSubmit}>
           <img src={logo} alt="tindev logo" />
